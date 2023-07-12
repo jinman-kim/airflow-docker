@@ -1,0 +1,15 @@
+version: '3'
+services:
+  airflow:
+    build: .
+    command: >
+      bash -c '
+      airflow db init &&
+      airflow users create --username admin --password admin --firstname Anonymous --lastname Admin --role Admin --email test@test.com &&
+      airflow webserver & airflow scheduler'
+    ports:
+      - 8080:8080
+    volumes:
+      - ./dags:/opt/airflow/dags/
+      - ./data:/home/airflow/data
+
